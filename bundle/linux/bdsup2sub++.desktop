@@ -2,7 +2,7 @@
 Name=BDSup2Sub++
 GenericName=Bitmap subtitles editor
 Comment=Convert and tweak bitmap subtitles
-Exec=bdsup2sub++
+Exec=bdsup2sub++ %f
 Terminal=false
 StartupNotify=true
 Type=Application
