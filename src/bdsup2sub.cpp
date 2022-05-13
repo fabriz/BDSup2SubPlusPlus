@@ -318,13 +318,15 @@ void BDSup2Sub::dropEvent(QDropEvent *event)
 
 void BDSup2Sub::showEvent(QShowEvent *event)
 {
+    bool first_load = false;
     QMainWindow::showEvent(event);
     if (settings == 0)
     {
         loadSettings();
+        first_load = true;
+        init();
     }
-    init();
-    if (fromCLI && !loadPath.isEmpty())
+    if (fromCLI && !loadPath.isEmpty() && first_load)
     {
         if (!QFile(loadPath).exists())
         {
