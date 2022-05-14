@@ -520,7 +520,7 @@ void SubtitleProcessor::scanSubtitles()
         double xScale = (double) xOfs / picTrg->x();
         double yScale = (double) yOfs / picTrg->y();
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int oldWidth = imageRect.width();
             imageRect.setX((int) ((imageRect.x() * xScale) + 0.5));
@@ -530,7 +530,7 @@ void SubtitleProcessor::scanSubtitles()
             imageRect.setY((int) ((imageRect.y() * yScale) + 0.5));
             imageRect.setHeight((int) ((oldHeight * heightScale) + 0.5));
         }
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int oldWidth = windowRect.width();
             windowRect.setX((int) ((windowRect.x() * xScale) + 0.5));
@@ -730,7 +730,7 @@ void SubtitleProcessor::reScanSubtitles(Resolution oldResolution, double fpsTrgO
         double xScale = (double) xOfs / subPictures[i]->x();
         double yScale = (double) yOfs / subPictures[i]->y();
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int oldWidth = imageRect.width();
             imageRect.setX((int) ((imageRect.x() * xScale) + 0.5));
@@ -740,7 +740,7 @@ void SubtitleProcessor::reScanSubtitles(Resolution oldResolution, double fpsTrgO
             imageRect.setY((int) ((imageRect.y() * yScale) + 0.5));
             imageRect.setHeight((int) ((oldHeight * heightScale) + 0.5));
         }
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int oldWidth = windowRect.width();
             windowRect.setX((int) ((windowRect.x() * xScale) + 0.5));
@@ -1706,13 +1706,13 @@ bool SubtitleProcessor::updateTrgPic(int index)
         }
         double xScale = (double) xOfs / picTrg->x();
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int oldWidth = imageRect.width();
             imageRect.setX((int) ((imageRect.x() * xScale) + 0.5));
             imageRect.setWidth((int) ((oldWidth * widthScale) + 0.5));
         }
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int oldWidth = windowRect.width();
             windowRect.setX((int) ((windowRect.x() * xScale) + 0.5));
@@ -1732,13 +1732,13 @@ bool SubtitleProcessor::updateTrgPic(int index)
         }
         double yScale = (double) yOfs / picTrg->y();
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int oldHeight = imageRect.height();
             imageRect.setY((int) ((imageRect.y() * yScale) + 0.5));
             imageRect.setHeight((int) ((oldHeight * heightScale) + 0.5));
         }
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int oldHeight = windowRect.height();
             windowRect.setY((int) ((windowRect.y() * yScale) + 0.5));
@@ -1843,14 +1843,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
                 dy = offsetY;
             }
 
-            for (QRect imageRect : imageRects)
+            for (QRect& imageRect : imageRects)
             {
                 int height = imageRect.height();
                 imageRect.setY(imageRect.y() + dy);
                 imageRect.setHeight(height);
             }
 
-            for (QRect windowRect : windowRects)
+            for (QRect& windowRect : windowRects)
             {
                 int height = windowRect.height();
                 windowRect.setY(windowRect.y() + dy);
@@ -1877,14 +1877,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
                 dy = offsetY;
             }
 
-            for (QRect imageRect : imageRects)
+            for (QRect& imageRect : imageRects)
             {
                 int height = imageRect.height();
                 imageRect.setY(imageRect.y() + dy);
                 imageRect.setHeight(height);
             }
 
-            for (QRect windowRect : windowRects)
+            for (QRect& windowRect : windowRects)
             {
                 int height = windowRect.height();
                 windowRect.setY(windowRect.y() + dy);
@@ -1908,14 +1908,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
             {
                 int dy = yMax - y1;
 
-                for (QRect imageRect : imageRects)
+                for (QRect& imageRect : imageRects)
                 {
                     int height = imageRect.height();
                     imageRect.setY(imageRect.y() + dy);
                     imageRect.setHeight(height);
                 }
 
-                for (QRect windowRect : windowRects)
+                for (QRect& windowRect : windowRects)
                 {
                     int height = windowRect.height();
                     windowRect.setY(windowRect.y() + dy);
@@ -1943,14 +1943,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
             dx = offsetX;
         }
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int width = imageRect.width();
             imageRect.setX(imageRect.x() + dx);
             imageRect.setWidth(width);
         }
 
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int width = windowRect.width();
             windowRect.setX(windowRect.x() + dx);
@@ -1969,14 +1969,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
             dx = ((w - wi) / 2) - x1;
         }
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int width = imageRect.width();
             imageRect.setX(imageRect.x() + dx);
             imageRect.setWidth(width);
         }
 
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int width = windowRect.width();
             windowRect.setX(windowRect.x() + dx);
@@ -1995,14 +1995,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
             dx = ((w - wi) / 2) - x1;
         }
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int width = imageRect.width();
             imageRect.setX(imageRect.x() + dx);
             imageRect.setWidth(width);
         }
 
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int width = windowRect.width();
             windowRect.setX(windowRect.x() + dx);
@@ -2013,14 +2013,14 @@ void SubtitleProcessor::moveToBounds(SubPicture *picture, int index, double barF
     {
         int dx = ((w - wi) / 2) - x1;
 
-        for (QRect imageRect : imageRects)
+        for (QRect& imageRect : imageRects)
         {
             int width = imageRect.width();
             imageRect.setX(imageRect.x() + dx);
             imageRect.setWidth(width);
         }
 
-        for (QRect windowRect : windowRects)
+        for (QRect& windowRect : windowRects)
         {
             int width = windowRect.width();
             windowRect.setX(windowRect.x() + dx);
