@@ -81,11 +81,11 @@ public:
     SubPictureBD();
     SubPictureBD(const SubPictureBD* other);
     SubPictureBD(const SubPictureBD& other);
-    ~SubPictureBD() { }
+    ~SubPictureBD() override { }
 
-    SubPicture* copy();
+    SubPicture* copy() override;
 
-    int imageWidth()
+    int imageWidth() override
     {
         int width;
         if (numberCompObjects == 1)
@@ -103,7 +103,7 @@ public:
         return width;
     }
 
-    int imageHeight()
+    int imageHeight() override
     {
         if (numberCompObjects == 1)
         {
@@ -119,7 +119,7 @@ public:
         }
     }
 
-    int x()
+    int x() override
     {
         if (numberCompObjects == 1)
         {
@@ -129,7 +129,7 @@ public:
                 scaledImageRects[objectIds[0]].x() : scaledImageRects[objectIds[1]].x();
     }
 
-    int y()
+    int y() override
     {
         if (numberCompObjects == 1)
         {
@@ -154,7 +154,7 @@ public:
     int subPictureType() { return type; }
     void setSubPictureType(int subPictureType) { type = subPictureType; }
 
-    bool isForced()
+    bool isForced() override
     {
         bool isForced = false;
 
@@ -168,7 +168,7 @@ public:
         return isForced;
     }
 
-    void setForced(bool isForced)
+    void setForced(bool isForced) override
     {
         for (auto key : imageObjectList.keys())
         {
