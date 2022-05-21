@@ -1384,12 +1384,13 @@ Bitmap SupBD::decodeImage(SubPictureBD *subPicture, int transparentIndex)
     int numImgObj = 0;
     QVector<int> objectIdxes;
 
-    for (int i = 0; i < subPicture->imageObjectList.size(); ++i)
+    for (auto key : subPicture->imageObjectList.keys())
     {
-        if (subPicture->imageObjectList[i].bufferSize() > 0)
+        auto& imageObject = subPicture->imageObjectList[key];
+        if (imageObject.bufferSize() > 0)
         {
             ++numImgObj;
-            objectIdxes.push_back(i);
+            objectIdxes.push_back(key);
         }
     }
 
