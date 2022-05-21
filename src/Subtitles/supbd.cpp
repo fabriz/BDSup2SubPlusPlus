@@ -319,7 +319,9 @@ void SupBD::readAllSupFrames()
                 {
                     pic.setData(pcs, imageObjects, palettes, wds);
 
-                    if (pic.numCompObjects() != 0 && (pic.compNum() != subPictures.back().compNum()) && (!imagesAreMergeable(pic, subPictures.back())))
+                    if (pic.numCompObjects() != 0 && 
+                       (subPictures.count() > 1 && pic.compNum() != subPictures.back().compNum()) &&
+                       (subPictures.count() > 1 && !imagesAreMergeable(pic, subPictures.back())))
                     {
                         subtitleProcessor->printX(QString("#< %1 (%2)\n")
                                                   .arg(QString::number(++subCount))
