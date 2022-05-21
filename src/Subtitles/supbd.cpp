@@ -123,6 +123,7 @@ void SupBD::readAllSupFrames()
     PCS pcs;
     PDS pds;
     int prevPalVersion = 0;
+    _numForcedFrames = 0;
 
     try
     {
@@ -259,6 +260,13 @@ void SupBD::readAllSupFrames()
                 for (int i = 0; i < pcs.forcedFlags.keys().size(); ++i)
                 {
                     bool forced = (pcs.forcedFlags[pcs.forcedFlags.keys()[i]] & 0x40) == 0x40;
+
+                    // count forced frames
+                    if (forced)
+                    {
+                        _numForcedFrames++;
+                    }
+
                     out += QString(", Object Id: %1, forced: %2")
                             .arg(QString::number(pcs.forcedFlags.keys()[i]))
                             .arg(forced ? "true" : "false");
@@ -319,7 +327,9 @@ void SupBD::readAllSupFrames()
                 {
                     pic.setData(pcs, imageObjects, palettes, wds);
 
-                    if (pic.numCompObjects() != 0 && (pic.compNum() != subPictures.back().compNum()) && (!imagesAreMergeable(pic, subPictures.back())))
+                    if (pic.numCompObjects() != 0 && 
+                       (subPictures.count() > 1 && pic.compNum() != subPictures.back().compNum()) &&
+                       (subPictures.count() > 1 && !imagesAreMergeable(pic, subPictures.back())))
                     {
                         subtitleProcessor->printX(QString("#< %1 (%2)\n")
                                                   .arg(QString::number(++subCount))
@@ -403,15 +413,6 @@ void SupBD::readAllSupFrames()
     }
 
     emit currentProgressChanged(bufsize);
-    // count forced frames
-    _numForcedFrames = 0;
-    for (auto subPicture : subPictures)
-    {
-        if (subPicture.isForced())
-        {
-            _numForcedFrames++;
-        }
-    }
 
     subtitleProcessor->printX(QString("\nDetected %1 forced captions.\n")
                               .arg(QString::number(_numForcedFrames)));
@@ -1383,12 +1384,13 @@ Bitmap SupBD::decodeImage(SubPictureBD *subPicture, int transparentIndex)
     int numImgObj = 0;
     QVector<int> objectIdxes;
 
-    for (int i = 0; i < subPicture->imageObjectList.size(); ++i)
+    for (auto key : subPicture->imageObjectList.keys())
     {
-        if (subPicture->imageObjectList[i].bufferSize() > 0)
+        auto& imageObject = subPicture->imageObjectList[key];
+        if (imageObject.bufferSize() > 0)
         {
             ++numImgObj;
-            objectIdxes.push_back(i);
+            objectIdxes.push_back(key);
         }
     }
 
