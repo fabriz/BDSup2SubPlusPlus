@@ -123,6 +123,7 @@ void SupBD::readAllSupFrames()
     PCS pcs;
     PDS pds;
     int prevPalVersion = 0;
+    _numForcedFrames = 0;
 
     try
     {
@@ -259,6 +260,13 @@ void SupBD::readAllSupFrames()
                 for (int i = 0; i < pcs.forcedFlags.keys().size(); ++i)
                 {
                     bool forced = (pcs.forcedFlags[pcs.forcedFlags.keys()[i]] & 0x40) == 0x40;
+
+                    // count forced frames
+                    if (forced)
+                    {
+                        _numForcedFrames++;
+                    }
+
                     out += QString(", Object Id: %1, forced: %2")
                             .arg(QString::number(pcs.forcedFlags.keys()[i]))
                             .arg(forced ? "true" : "false");
@@ -405,15 +413,6 @@ void SupBD::readAllSupFrames()
     }
 
     emit currentProgressChanged(bufsize);
-    // count forced frames
-    _numForcedFrames = 0;
-    for (auto subPicture : subPictures)
-    {
-        if (subPicture.isForced())
-        {
-            _numForcedFrames++;
-        }
-    }
 
     subtitleProcessor->printX(QString("\nDetected %1 forced captions.\n")
                               .arg(QString::number(_numForcedFrames)));
