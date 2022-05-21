@@ -158,11 +158,11 @@ public:
     {
         bool isForced = false;
 
-        for (int i = 0; i < imageObjectList.size(); ++i)
+        for (auto& i : imageObjectList)
         {
-            if (imageObjectList[i].fragmentList().size() > 0)
+            if (!i.fragmentList().empty())
             {
-                isForced |= imageObjectList[i].isForced();
+                isForced |= i.isForced();
             }
         }
         return isForced;
