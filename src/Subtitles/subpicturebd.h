@@ -170,12 +170,13 @@ public:
 
     void setForced(bool isForced)
     {
-        for (int i = 0; i < imageObjectList.size(); ++i)
+        for (auto key : imageObjectList.keys())
         {
-            if (!imageObjectList[i].fragmentList().empty())
+            auto& imageObject = imageObjectList[key];
+            if (!imageObject.fragmentList().empty())
             {
-                imageObjectList[i].setForcedFlags(isForced ? 0x40 : 0);
-                forcedFlags[i] = imageObjectList[i].forcedFlags();
+                imageObject.setForcedFlags(isForced ? 0x40 : 0);
+                forcedFlags[key] = imageObject.forcedFlags();
             }
         }
     }
