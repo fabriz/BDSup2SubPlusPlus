@@ -422,8 +422,7 @@ bool SupBD::imagesAreMergeable(SubPictureBD &currentSub, SubPictureBD &prevSub)
 {
     if (std::abs(prevSub.endTime() - currentSub.startTime()) < 10 && prevSub.imageWidth() == currentSub.imageWidth() && prevSub.imageHeight() == currentSub.imageHeight())
     {
-        if (!currentSub.imageObjectList.empty() && !currentSub.imageObjectList[0].fragmentList().empty() &&
-            !prevSub.imageObjectList.empty() && !prevSub.imageObjectList[0].fragmentList().empty())
+        if (!currentSub.imageObjectList.empty() && !prevSub.imageObjectList.empty())
         {
             QVector<uchar> curImageBuf, prevImageBuf;
             for (auto imageObject : currentSub.imageObjectList)
