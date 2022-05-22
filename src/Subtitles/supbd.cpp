@@ -606,12 +606,10 @@ QVector<uchar> SupBD::createSupFrame(SubPicture *subPicture, Bitmap &bm, Palette
 
     if (subPicture->numCompObjects() >= 1)
     {
-        int i = 0;
-        for (int objectId : subPicture->objectIDs())
+        for (auto objectId : subPicture->objectIDs())
         {
-            imageSizes[i] = subPicture->imageSizes()[objectId];
-            windows[i] = subPicture->windowSizes()[objectId];
-            ++i;
+            imageSizes[objectId] = subPicture->imageSizes()[objectId];
+            windows[objectId] = subPicture->windowSizes()[objectId];
         }
         numberOfImageObjects = subPicture->numCompObjects();
     }
@@ -689,7 +687,14 @@ QVector<uchar> SupBD::createSupFrame(SubPicture *subPicture, Bitmap &bm, Palette
     {
         for (int i = 0; i < subPicture->objectIDs().size(); ++i)
         {
-            forcedFlags.push_back(subPicture->forcedFlags[subPicture->forcedFlags.keys()[i]]);
+            if (!subPicture->forcedFlags.empty())
+            {
+                forcedFlags.push_back(subPicture->forcedFlags[subPicture->forcedFlags.keys()[i]]);
+            }
+            else
+            {
+                forcedFlags.push_back(0);
+            }
         }
     }
 
