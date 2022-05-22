@@ -425,21 +425,21 @@ bool SupBD::imagesAreMergeable(SubPictureBD &currentSub, SubPictureBD &prevSub)
         if (!currentSub.imageObjectList.empty() && !prevSub.imageObjectList.empty())
         {
             QVector<uchar> curImageBuf, prevImageBuf;
-            for (auto imageObject : currentSub.imageObjectList)
+            for (auto& imageObject : currentSub.imageObjectList)
             {
                 curImageBuf = QVector<uchar>(imageObject.bufferSize());
                 int index = 0;
-                for (auto fragment : imageObject.fragmentList())
+                for (auto& fragment : imageObject.fragmentList())
                 {
                     fileBuffer->getBytes(fragment.imageBufferOffset(), curImageBuf.data() + index, fragment.imagePacketSize());
                     index += fragment.imagePacketSize();
                 }
             }
-            for (auto imageObject : prevSub.imageObjectList)
+            for (auto& imageObject : prevSub.imageObjectList)
             {
                 prevImageBuf = QVector<uchar>(imageObject.bufferSize());
                 int index = 0;
-                for (auto fragment : imageObject.fragmentList())
+                for (auto& fragment : imageObject.fragmentList())
                 {
                     fileBuffer->getBytes(fragment.imageBufferOffset(), prevImageBuf.data() + index, fragment.imagePacketSize());
                     index += fragment.imagePacketSize();
