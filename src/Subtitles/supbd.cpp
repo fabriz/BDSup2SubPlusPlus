@@ -689,7 +689,14 @@ QVector<uchar> SupBD::createSupFrame(SubPicture *subPicture, Bitmap &bm, Palette
     {
         for (int i = 0; i < subPicture->objectIDs().size(); ++i)
         {
-            forcedFlags.push_back(subPicture->forcedFlags[subPicture->forcedFlags.keys()[i]]);
+            if (!subPicture->forcedFlags.empty())
+            {
+                forcedFlags.push_back(subPicture->forcedFlags[subPicture->forcedFlags.keys()[i]]);
+            }
+            else
+            {
+                forcedFlags.push_back(0);
+            }
         }
     }
 
