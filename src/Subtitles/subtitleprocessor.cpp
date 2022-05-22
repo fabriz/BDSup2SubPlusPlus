@@ -469,27 +469,27 @@ void SubtitleProcessor::scanSubtitles()
             scaleY = 1.0;
         }
 
-        double width = ((picSrc->imageWidth() * scaleX) * fx) + 0.5;
+        int width = (int)(((picSrc->imageWidth() * scaleX) * fx) + 0.5);
         if (width < minDim)
         {
-            width = (double) picSrc->imageWidth();
+            width = picSrc->imageWidth();
         }
         else if (width > picTrg->screenWidth())
         {
-            width = (double) picTrg->screenWidth();
+            width = picTrg->screenWidth();
         }
 
-        double height = ((picSrc->imageHeight() * scaleY) * fy) + 0.5;
+        int height = (int)(((picSrc->imageHeight() * scaleY) * fy) + 0.5);
         if (height < minDim)
         {
-            height = (double) picSrc->imageHeight();
+            height = picSrc->imageHeight();
         }
         else if (height > picTrg->screenHeight())
         {
-            height = (double) picTrg->screenHeight();
+            height = picTrg->screenHeight();
         }
 
-        double xOfs = picSrc->x() * scaleX;
+        int xOfs = (int)((picSrc->x() * scaleX) + .5);
         int spaceSrc = (int)(((picSrc->screenWidth() - picSrc->imageWidth()) * scaleX) + 0.5);
         int spaceTrg = picTrg->screenWidth() - width;
         xOfs += ((spaceTrg - spaceSrc) / 2.0);
@@ -499,17 +499,17 @@ void SubtitleProcessor::scanSubtitles()
         }
         else if ((xOfs + width) > picTrg->screenWidth())
         {
-            xOfs = (double) picTrg->screenWidth() - width;
+            xOfs = picTrg->screenWidth() - width;
         }
 
-        double yOfs = picSrc->y() * scaleY;
+        int yOfs = (int)((picSrc->y() * scaleY) + .5);
         spaceSrc = (int)((picSrc->screenHeight() - picSrc->imageHeight()) * scaleY + 0.5);
         spaceTrg = picTrg->screenHeight() - height;
         yOfs += ((spaceTrg - spaceSrc) / 2.0);
 
         if ((yOfs + height) > picTrg->screenHeight())
         {
-            yOfs = (double) picTrg->screenHeight() - height;
+            yOfs = picTrg->screenHeight() - height;
         }
 
         QMap<int, QRect> &imageRects = picTrg->imageSizes();
